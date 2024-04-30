@@ -31,4 +31,11 @@ export class CartService {
   getTotal(items: Array<CartItem>): number {
     return items.map((item) => item.price * item.quantity).reduce((prev, current) => prev + current, 0);
   }
+
+  onClearCart(): void {
+      this.cart.next({items: []});
+      this._snackBar.open('Cart is cleared.', 'Ok', {
+        duration: 3000
+      })
+  }
 }

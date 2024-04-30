@@ -8,6 +8,7 @@ import { CurrencyPipe } from '@angular/common';
 import { Cart, CartItem } from '../../models/cart.model';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -19,6 +20,7 @@ import { CartService } from '../../services/cart.service';
         MatMenuModule,
         MatButtonModule,
         CommonModule,
+        RouterModule,
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.css',
@@ -48,5 +50,9 @@ export class HeaderComponent {
 
     getTotal(items: Array<CartItem>): number {
       return this._cartService.getTotal(items);
+    }
+
+    onClearCart() {
+        this._cartService.onClearCart();
     }
 }
