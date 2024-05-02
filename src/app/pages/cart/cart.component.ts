@@ -6,11 +6,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { CartService } from '../../services/cart.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [MatCardModule, CommonModule, MatButtonModule, MatTableModule, MatIconModule],
+  imports: [MatCardModule, CommonModule, MatButtonModule, MatTableModule, MatIconModule, RouterModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -42,16 +43,32 @@ export class CartComponent {
     'action',
   ];
 
-  constructor(private _cartService: CartService) {}
+  constructor(private cartService: CartService) {}
 
   ngOnInit() : void {
-    this._cartService.cart.subscribe((_cart: Cart) => {
+    this.cartService.cart.subscribe((_cart: Cart) => {
       this.cart = _cart;
       this.dataSource = this.cart.items;
     });
   }
 
   getTotal(items: Array<CartItem>): number {
-    return this._cartService.getTotal(items);
+    return this.cartService.getTotal(items);
+  }
+
+  onClearCart(): void {
+    this.cartService.onClearCart();
+  }
+
+  onRemoveFromCart(item: CartItem): void {
+    this.cartService.removeFromCart(item);
+  }
+
+  onAddQuantity(item: CartItem): void {
+    this.cartService.addToCart(item);
+  }
+
+  onRemoveQuantity(item: CartItem): void {
+    this.cartService.removeQuantity(item);
   }
 }
